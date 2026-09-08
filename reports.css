@@ -1,0 +1,12 @@
+/* ==========================================================================
+   AddCo — reports.css
+   ========================================================================== */
+
+.report-period-row { margin-bottom: 16px; }
+.report-period-row .filter-input { max-width: 220px; }
+
+.report-highlight-grid { margin-bottom: 18px; }
+
+@media (max-width: 500px) {
+  .report-period-row .filter-input { max-width: 100%; width: 100%; }
+}

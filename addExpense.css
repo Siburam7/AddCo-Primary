@@ -1,0 +1,53 @@
+/* ==========================================================================
+   AddCo — addExpense.css
+   ========================================================================== */
+
+.expense-form {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  max-width: 520px;
+}
+
+.btn-add-expense {
+  width: 100%;
+  position: relative;
+  height: 46px;
+  margin-top: 4px;
+}
+
+.btn-add-expense .btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.15s ease;
+}
+
+.btn-add-expense .btn-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* Loading state: hide content, show spinner */
+.btn-add-expense.is-loading .btn-content { opacity: 0; }
+.btn-add-expense.is-loading .btn-spinner { display: block !important; }
+
+/* Success state: green flash with check icon */
+.btn-add-expense.is-success {
+  background: var(--color-success);
+}
+.btn-add-expense.is-success .btn-content { opacity: 1; }
+.btn-add-expense.is-success .btn-spinner { display: none !important; }
+
+@media (max-width: 720px) {
+  .expense-form { max-width: 100%; padding: 16px; }
+}

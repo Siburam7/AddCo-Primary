@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>AddCo — Track Your Expenses</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="addExpense.css">
+  <link rel="stylesheet" href="myPurchases.css">
+  <link rel="stylesheet" href="budget.css">
+  <link rel="stylesheet" href="reports.css">
+  <link rel="stylesheet" href="categories.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+
+  <!-- ============ LOADING SCREEN ============ -->
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-content">
+      <!-- <div class="loading-logo">
+        <img src="img/Finaal AddCo logo.png" alt="Logo">
+      </div> -->
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Getting your finances ready…</p>
+    </div>
+  </div>
+
+  <!-- ============ TOP NAVIGATION ============ -->
+  <header class="top-nav" id="topNav">
+    <div class="top-nav-row">
+      <div class="top-nav-left">
+        <button class="icon-btn hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+          <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+        </button>
+        <div class="brand-logo">
+        </div>
+      </div>
+      <div class="top-nav-right">
+        <button class="icon-btn notif-btn" id="notifBtn" aria-label="Notifications">
+          <i class="fa-regular fa-bell"></i>
+        </button>
+        <button class="user-chip" id="userChipBtn" aria-label="Account">
+          <span class="user-avatar-sm">RA</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ EXPANDABLE NAV MENU ============ -->
+    <div class="nav-menu-overlay" id="menuOverlay"></div>
+    <nav class="nav-menu" id="navMenu" aria-hidden="true">
+      <div class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button class="icon-btn close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="nav-menu-body" id="navMenuBody">
+
+        <!-- Default menu view -->
+        <div class="nav-view nav-view--main" id="navViewMain">
+          <ul class="nav-links">
+            <li><a href="#" class="nav-link" data-page="dashboard"><i
+                  class="fa-solid fa-grid-2 nav-link-icon"></i><span>Dashboard</span></a></li>
+            <li><a href="#" class="nav-link" data-page="addExpense"><i
+                  class="fa-solid fa-circle-plus nav-link-icon"></i><span>Add Expense</span></a></li>
+            <li><a href="#" class="nav-link" data-page="myPurchases"><i
+                  class="fa-solid fa-receipt nav-link-icon"></i><span>My Purchases</span></a></li>
+            <li><a href="#" class="nav-link" data-page="budget"><i
+                  class="fa-solid fa-piggy-bank nav-link-icon"></i><span>Budget</span></a></li>
+            <li><a href="#" class="nav-link" data-page="reports"><i
+                  class="fa-solid fa-chart-pie nav-link-icon"></i><span>Reports</span></a></li>
+            <li><a href="#" class="nav-link" data-page="categories"><i
+                  class="fa-solid fa-tags nav-link-icon"></i><span>Categories</span></a></li>
+            <li><a href="#" class="nav-link" data-page="settings"><i
+                  class="fa-solid fa-gear nav-link-icon"></i><span>Settings</span></a></li>
+          </ul>
+
+          <div class="nav-divider"></div>
+
+          <button class="profile-section" id="profileToggleBtn">
+            <span class="user-avatar-md">RA</span>
+            <span class="profile-info">
+              <span class="profile-name" id="profileNameLabel">Riya Agarwal</span>
+              <span class="profile-email" id="profileEmailLabel">riya.agarwal@email.com</span>
+            </span>
+            <span class="premium-badge"><i class="fa-solid fa-crown"></i> Premium</span>
+            <i class="fa-solid fa-chevron-right profile-arrow"></i>
+          </button>
+
+          <button class="nav-logout-btn" id="logoutBtnMain">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Logout</span>
+          </button>
+        </div>
+
+        <!-- Expanded profile view -->
+        <div class="nav-view nav-view--profile" id="navViewProfile" hidden>
+          <button class="profile-back-btn" id="profileBackBtn">
+            <i class="fa-solid fa-chevron-left"></i><span>Back</span>
+          </button>
+
+          <div class="profile-summary">
+            <span class="user-avatar-lg">RA</span>
+            <span class="profile-name-lg">Riya Agarwal</span>
+            <span class="profile-email">riya.agarwal@email.com</span>
+            <span class="premium-badge"><i class="fa-solid fa-crown"></i> Premium</span>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="#" class="nav-link" data-profile-panel="personal"><i
+                  class="fa-solid fa-user nav-link-icon"></i><span>Personal Information</span></a></li>
+            <li><a href="#" class="nav-link" data-profile-panel="security"><i
+                  class="fa-solid fa-lock nav-link-icon"></i><span>Security</span></a></li>
+            <li><a href="#" class="nav-link" data-profile-panel="help"><i
+                  class="fa-solid fa-circle-question nav-link-icon"></i><span>Help &amp; Support</span></a></li>
+            <li><a href="#" class="nav-link" data-profile-panel="about"><i
+                  class="fa-solid fa-circle-info nav-link-icon"></i><span>About AddCo</span></a></li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="app-content" id="appContent">
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <section class="page" id="page-dashboard">
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle" id="dashboardDateLabel">Overview for this month</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Spending</span>
+          <span class="stat-value" id="statTotalSpent">₹0</span>
+          <span class="stat-sub">this month</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Income</span>
+          <span class="stat-value" id="statTotalIncome">₹0</span>
+          <span class="stat-sub">this month</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Remaining Budget</span>
+          <span class="stat-value" id="statRemaining">₹0</span>
+          <span class="stat-sub">of monthly budget</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Purchases</span>
+          <span class="stat-value" id="statPurchaseCount">0</span>
+          <span class="stat-sub">this month</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Today's Spending</span>
+          <span class="stat-value" id="statTodaySpent">₹0</span>
+          <span class="stat-sub" id="statTodayDate">—</span>
+        </div>
+      </div>
+
+      <div class="dash-row">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Spending by Category</h2>
+          </div>
+          <div class="category-bars" id="dashCategoryBars">
+            <p class="empty-hint">No expenses yet. Add your first expense to see a breakdown.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Budget Status</h2>
+          </div>
+          <div class="budget-status-mini" id="dashBudgetStatus">
+            <p class="empty-hint">Set a monthly budget to track your progress.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Recent Transactions</h2>
+          <a href="#" class="panel-link" data-page="myPurchases">View all</a>
+        </div>
+        <div class="recent-list" id="recentTransactionsList">
+          <p class="empty-hint">No transactions yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- ADD EXPENSE ---------- -->
+    <section class="page" id="page-addExpense">
+      <div class="page-header">
+        <h1 class="page-title">Add Expense</h1>
+        <p class="page-subtitle">Log a new purchase</p>
+      </div>
+
+      <form class="expense-form" id="expenseForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="amountInput">Amount</label>
+          <div class="amount-input-wrap">
+            <span class="currency-symbol">₹</span>
+            <input type="number" id="amountInput" class="form-input amount-input" placeholder="0" min="0" step="0.01"
+              inputmode="decimal">
+          </div>
+          <span class="form-error" id="amountError"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="categorySelect">Category</label>
+          <select id="categorySelect" class="form-input">
+            <option value="">Select category</option>
+          </select>
+          <span class="form-error" id="categoryError"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="dateInput">Date</label>
+            <input type="date" id="dateInput" class="form-input">
+            <span class="form-error" id="dateError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="paymentMethodSelect">Payment Method</label>
+            <select id="paymentMethodSelect" class="form-input">
+              <option value="">Select method</option>
+              <option value="UPI">UPI</option>
+              <option value="Cash">Cash</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+            <span class="form-error" id="paymentMethodError"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="descriptionInput">Description <span
+              class="optional-tag">(optional)</span></label>
+          <textarea id="descriptionInput" class="form-input" rows="3"
+            placeholder="What was this expense for?"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary btn-add-expense" id="addExpenseButton">
+          <span class="btn-content">
+            <i class="fa-solid fa-plus"></i>
+            <span class="btn-text">Add Expense</span>
+          </span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- ---------- MY PURCHASES ---------- -->
+    <section class="page" id="page-myPurchases">
+      <div class="page-header">
+        <h1 class="page-title">My Purchases</h1>
+        <p class="page-subtitle">All your recorded expenses</p>
+      </div>
+
+      <div class="purchases-toolbar">
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="searchInput" class="form-input search-input" placeholder="Search purchases">
+        </div>
+        <select id="filterCategory" class="form-input filter-input">
+          <option value="">All categories</option>
+        </select>
+        <select id="filterDateRange" class="form-input filter-input">
+          <option value="all">All time</option>
+          <option value="today">Today</option>
+          <option value="week">This week</option>
+          <option value="month">This month</option>
+          <option value="lastMonth">Last month</option>
+          <option value="year">This year</option>
+        </select>
+        <select id="sortSelect" class="form-input filter-input">
+          <option value="dateDesc">Newest first</option>
+          <option value="dateAsc">Oldest first</option>
+          <option value="amountDesc">Amount: High to Low</option>
+          <option value="amountAsc">Amount: Low to High</option>
+        </select>
+      </div>
+
+      <div class="purchases-list" id="purchasesList"></div>
+      <p class="empty-hint" id="purchasesEmptyState" hidden>No purchases match your filters.</p>
+    </section>
+
+    <!-- ---------- BUDGET ---------- -->
+    <section class="page" id="page-budget">
+      <div class="page-header">
+        <h1 class="page-title">Budget</h1>
+        <p class="page-subtitle">Plan and track your monthly spending</p>
+      </div>
+
+      <div class="panel budget-overview-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Monthly Budget</h2>
+        </div>
+        <div class="budget-set-row">
+          <div class="amount-input-wrap">
+            <span class="currency-symbol">₹</span>
+            <input type="number" id="monthlyBudgetInput" class="form-input amount-input" placeholder="0" min="0">
+          </div>
+          <button class="btn-primary btn-save-budget" id="saveBudgetBtn">Save Budget</button>
+        </div>
+
+        <div class="budget-progress-block">
+          <div class="budget-progress-labels">
+            <span>Spent: <strong id="budgetSpentLabel">₹0</strong></span>
+            <span>Remaining: <strong id="budgetRemainingLabel">₹0</strong></span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="budgetOverviewBar"></div>
+          </div>
+          <div class="budget-progress-footer">
+            <span id="budgetPercentLabel">0% used</span>
+            <span class="budget-warning" id="budgetWarning" hidden></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Category Budgets</h2>
+        </div>
+        <div class="category-budget-list" id="categoryBudgetList"></div>
+      </div>
+    </section>
+
+    <!-- ---------- REPORTS ---------- -->
+    <section class="page" id="page-reports">
+      <div class="page-header">
+        <h1 class="page-title">Reports</h1>
+        <p class="page-subtitle">Understand your spending patterns</p>
+      </div>
+
+      <div class="report-period-row">
+        <select id="reportPeriodSelect" class="form-input filter-input">
+          <option value="week">This week</option>
+          <option value="month" selected>This month</option>
+          <option value="lastMonth">Last month</option>
+          <option value="year">This year</option>
+        </select>
+      </div>
+
+      <div class="stat-grid report-highlight-grid">
+        <div class="stat-card">
+          <span class="stat-label">Highest Category</span>
+          <span class="stat-value stat-value--sm" id="reportHighestCategory">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Highest Expense</span>
+          <span class="stat-value stat-value--sm" id="reportHighestExpense">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Spent</span>
+          <span class="stat-value stat-value--sm" id="reportTotalSpent">₹0</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Category Breakdown</h2>
+        </div>
+        <div class="category-bars" id="reportCategoryChart"></div>
+      </div>
+
+      <div class="dash-row">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Payment Method Spending</h2>
+          </div>
+          <div class="category-bars" id="reportPaymentChart"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Daily Spending</h2>
+          </div>
+          <div class="mini-bar-chart" id="reportDailyChart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- CATEGORIES ---------- -->
+    <section class="page" id="page-categories">
+      <div class="page-header">
+        <div class="page-header-row">
+          <div>
+            <h1 class="page-title">Categories</h1>
+            <p class="page-subtitle">Organize how your expenses are grouped</p>
+          </div>
+          <button class="btn-primary btn-add-category" id="addCategoryBtn">
+            <i class="fa-solid fa-plus"></i><span>Add Category</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="category-grid" id="categoryGrid"></div>
+    </section>
+
+    <!-- ---------- SETTINGS ---------- -->
+    <section class="page" id="page-settings">
+      <div class="page-header">
+        <h1 class="page-title">Settings</h1>
+        <p class="page-subtitle">Manage your account and preferences</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Profile</h2>
+        </div>
+        <div class="settings-form-row">
+          <div class="form-group">
+            <label class="form-label" for="settingsNameInput">Full Name</label>
+            <input type="text" id="settingsNameInput" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="settingsEmailInput">Email</label>
+            <input type="email" id="settingsEmailInput" class="form-input">
+          </div>
+        </div>
+        <button class="btn-primary" id="saveProfileBtn">Save Profile</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Preferences</h2>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-title">Currency</span>
+            <span class="settings-row-desc">Used across the app for all amounts</span>
+          </div>
+          <select id="settingsCurrencySelect" class="form-input settings-select">
+            <option value="INR">INR (₹)</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-title">Theme</span>
+            <span class="settings-row-desc">Choose how AddCo looks</span>
+          </div>
+          <select id="settingsThemeSelect" class="form-input settings-select">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-title">Notifications</span>
+            <span class="settings-row-desc">Budget alerts and reminders</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="settingsNotificationsToggle">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Data Management</h2>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-title">Export your data</span>
+            <span class="settings-row-desc">Download all expenses as a JSON file</span>
+          </div>
+          <button class="btn-secondary" id="exportDataBtn">Export</button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <span class="settings-row-title">Clear all data</span>
+            <span class="settings-row-desc">Permanently remove all AddCo data from this device</span>
+          </div>
+          <button class="btn-danger-outline" id="clearDataBtn">Clear Data</button>
+        </div>
+      </div>
+
+      <button class="btn-danger-outline btn-settings-logout" id="settingsLogoutBtn">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER (MOBILE) NAVIGATION ============ -->
+  <nav class="footer-nav" id="footerNav">
+    <a href="#" class="footer-nav-item" data-page="dashboard">
+      <i class="fa-solid fa-grid-2"></i><span>Dashboard</span>
+    </a>
+    <a href="#" class="footer-nav-item" data-page="addExpense">
+      <i class="fa-solid fa-circle-plus"></i><span>Add</span>
+    </a>
+    <a href="#" class="footer-nav-item" data-page="myPurchases">
+      <i class="fa-solid fa-receipt"></i><span>Purchases</span>
+    </a>
+    <a href="#" class="footer-nav-item" data-page="budget">
+      <i class="fa-solid fa-piggy-bank"></i><span>Budget</span>
+    </a>
+  </nav>
+
+  <!-- ============ EDIT EXPENSE MODAL ============ -->
+  <div class="modal-overlay" id="editModal" hidden>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Expense</h2>
+        <button class="icon-btn" id="closeEditModalBtn" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form class="expense-form" id="editExpenseForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="editAmountInput">Amount</label>
+          <div class="amount-input-wrap">
+            <span class="currency-symbol">₹</span>
+            <input type="number" id="editAmountInput" class="form-input amount-input" min="0" step="0.01">
+          </div>
+          <span class="form-error" id="editAmountError"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editCategorySelect">Category</label>
+          <select id="editCategorySelect" class="form-input"></select>
+          <span class="form-error" id="editCategoryError"></span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="editDateInput">Date</label>
+            <input type="date" id="editDateInput" class="form-input">
+            <span class="form-error" id="editDateError"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editPaymentMethodSelect">Payment Method</label>
+            <select id="editPaymentMethodSelect" class="form-input">
+              <option value="UPI">UPI</option>
+              <option value="Cash">Cash</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+            <span class="form-error" id="editPaymentMethodError"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editDescriptionInput">Description <span
+              class="optional-tag">(optional)</span></label>
+          <textarea id="editDescriptionInput" class="form-input" rows="3"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelEditBtn">Cancel</button>
+          <button type="submit" class="btn-primary" id="saveEditBtn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ DELETE CONFIRM MODAL ============ -->
+  <div class="modal-overlay" id="deleteModal" hidden>
+    <div class="modal-box modal-box--sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Delete Expense</h2>
+        <button class="icon-btn" id="closeDeleteModalBtn" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="modal-message">Are you sure you want to delete this expense? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CATEGORY MODAL ============ -->
+  <div class="modal-overlay" id="categoryModal" hidden>
+    <div class="modal-box modal-box--sm">
+      <div class="modal-header">
+        <h2 class="modal-title" id="categoryModalTitle">Add Category</h2>
+        <button class="icon-btn" id="closeCategoryModalBtn" aria-label="Close"><i
+            class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="categoryForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="categoryNameInput">Category Name</label>
+          <input type="text" id="categoryNameInput" class="form-input" placeholder="e.g. Travel">
+          <span class="form-error" id="categoryNameError"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Icon</label>
+          <div class="icon-picker" id="categoryIconPicker"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Color</label>
+          <div class="color-picker" id="categoryColorPicker"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelCategoryBtn">Cancel</button>
+          <button type="submit" class="btn-primary" id="saveCategoryBtn">Save Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ CATEGORY DELETE / REASSIGN MODAL ============ -->
+  <div class="modal-overlay" id="categoryDeleteModal" hidden>
+    <div class="modal-box modal-box--sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Delete Category</h2>
+        <button class="icon-btn" id="closeCategoryDeleteModalBtn" aria-label="Close"><i
+            class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="modal-message" id="categoryDeleteMessage"></p>
+      <div class="form-group" id="categoryReassignGroup" hidden>
+        <label class="form-label" for="categoryReassignSelect">Move existing expenses to</label>
+        <select id="categoryReassignSelect" class="form-input"></select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancelCategoryDeleteBtn">Cancel</button>
+        <button type="button" class="btn-danger" id="confirmCategoryDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast" id="toast" hidden>
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span class="toast-message" id="toastMessage"></span>
+  </div>
+
+  <script src="noting.js"></script>
+</body>
+
+</html>
