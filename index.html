@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>AddCo-Track Your Expenses</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
@@ -13,6 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="addExpense.css">
   <link rel="stylesheet" href="myPurchases.css">
   <link rel="stylesheet" href="budget.css">
@@ -21,7 +23,231 @@
   <link rel="stylesheet" href="settings.css">
 </head>
 
-<body>
+<body class="auth-active">
+
+  <!-- ============ AUTH FLOW (onboarding + login/signup/OTP) ============ -->
+  <div id="authFlow" class="auth-flow">
+    <div class="auth-stage">
+      <div class="auth-brand">
+        <img src="img/Finaal AddCo logo.png" alt="AddCo" class="auth-brand-logo">
+      </div>
+
+      <div class="auth-device">
+        <button class="auth-skip" id="authSkipBtn" type="button">Skip</button>
+
+        <!-- ONBOARDING 1 -->
+        <section class="auth-screen" data-view="onboarding-1" aria-hidden="true">
+          <div class="auth-visual">
+            <div class="auth-card">
+              <div class="auth-card__top">
+                <div>
+                  <p class="auth-card__label">This week</p>
+                  <p class="auth-card__figure">₹2,000</p>
+                </div>
+                <span class="auth-card__pill">−4.2%</span>
+              </div>
+              <ul class="auth-expense-list">
+                <li class="auth-expense-row">
+                  <span class="auth-expense-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v8M12 3v18m6-18c-2 0-3 2.5-3 6s1 6 3 6" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span class="auth-expense-info">
+                    <span class="auth-expense-name">Food</span>
+                    <span class="auth-expense-sub">Today, 1:12 PM</span>
+                  </span>
+                  <span class="auth-expense-amount">₹500</span>
+                </li>
+                <li class="auth-expense-row">
+                  <span class="auth-expense-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                      <path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" />
+                    </svg>
+                  </span>
+                  <span class="auth-expense-info">
+                    <span class="auth-expense-name">Shopping</span>
+                    <span class="auth-expense-sub">Yesterday, 5:40 PM</span>
+                  </span>
+                  <span class="auth-expense-amount">₹1,200</span>
+                </li>
+                <li class="auth-expense-row">
+                  <span class="auth-expense-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 12h18M6 12l3-7h6l3 7M6 12l1.5 7h9L18 12" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span class="auth-expense-info">
+                    <span class="auth-expense-name">Travel</span>
+                    <span class="auth-expense-sub">Mon, 9:05 AM</span>
+                  </span>
+                  <span class="auth-expense-amount">₹300</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="auth-copy">
+            <h1>Know where your money goes</h1>
+            <p>Quickly add and organise your daily expenses in one simple place.</p>
+          </div>
+          <button class="auth-next" type="button" data-next>Next <span aria-hidden="true">→</span></button>
+        </section>
+
+        <!-- ONBOARDING 2 -->
+        <section class="auth-screen" data-view="onboarding-2" aria-hidden="true">
+          <div class="auth-visual">
+            <div class="auth-card">
+              <p class="auth-card__label">Monthly budget</p>
+              <p class="auth-budget-figure">₹20,000</p>
+              <div class="auth-bar">
+                <div class="auth-bar__fill"></div>
+              </div>
+              <div class="auth-bar__scale">
+                <span>0</span>
+                <strong>62% used</strong>
+                <span>₹20k</span>
+              </div>
+              <div class="auth-split">
+                <div class="auth-split__item">
+                  <span class="auth-split__dot auth-split__dot--a"></span>
+                  <span>
+                    <span class="auth-split__label">Spent</span>
+                    <span class="auth-split__value">₹12,450</span>
+                  </span>
+                </div>
+                <div class="auth-split__divider"></div>
+                <div class="auth-split__item">
+                  <span class="auth-split__dot auth-split__dot--b"></span>
+                  <span>
+                    <span class="auth-split__label">Remaining</span>
+                    <span class="auth-split__value">₹7,550</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="auth-copy">
+            <h1>Stay within your budget</h1>
+            <p>Set your monthly budget and easily see how much you've spent and how much is left.</p>
+          </div>
+          <button class="auth-next" type="button" data-next>Next <span aria-hidden="true">→</span></button>
+        </section>
+
+        <!-- ONBOARDING 3 -->
+        <section class="auth-screen" data-view="onboarding-3" aria-hidden="true">
+          <div class="auth-visual">
+            <div class="auth-card auth-card--insights">
+              <div class="auth-donut-wrap">
+                <svg class="auth-donut" viewBox="0 0 120 120" role="img" aria-label="Spending split by category">
+                  <circle class="auth-donut__track" cx="60" cy="60" r="48" />
+                  <circle class="auth-donut__seg" cx="60" cy="60" r="48"
+                    style="--start:0;  --len:35; stroke:#FF7A59;" />
+                  <circle class="auth-donut__seg" cx="60" cy="60" r="48"
+                    style="--start:35; --len:25; stroke:var(--color-primary);" />
+                  <circle class="auth-donut__seg" cx="60" cy="60" r="48"
+                    style="--start:60; --len:20; stroke:var(--color-success);" />
+                  <circle class="auth-donut__seg" cx="60" cy="60" r="48"
+                    style="--start:80; --len:20; stroke:var(--color-warning);" />
+                </svg>
+                <div class="auth-donut__center">
+                  <span class="auth-donut__figure">₹12,450</span>
+                  <span class="auth-donut__label">this month</span>
+                </div>
+              </div>
+              <ul class="auth-legend">
+                <li class="auth-legend__item"><span class="auth-legend__dot" style="background:#FF7A59"></span>Food<span
+                    class="auth-legend__pct">35%</span></li>
+                <li class="auth-legend__item"><span class="auth-legend__dot"
+                    style="background:var(--color-primary)"></span>Shopping<span class="auth-legend__pct">25%</span>
+                </li>
+                <li class="auth-legend__item"><span class="auth-legend__dot"
+                    style="background:var(--color-success)"></span>Travel<span class="auth-legend__pct">20%</span></li>
+                <li class="auth-legend__item"><span class="auth-legend__dot"
+                    style="background:var(--color-warning)"></span>Bills<span class="auth-legend__pct">20%</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="auth-copy">
+            <h1>Make smarter money decisions</h1>
+            <p>Get a clear view of your spending and build better financial habits with AddCo.</p>
+          </div>
+          <button class="auth-next" type="button" data-view-target="login">Get started <span
+              aria-hidden="true">→</span></button>
+        </section>
+
+        <nav class="auth-dots" id="authDots" aria-label="Onboarding progress">
+          <button class="auth-dot" type="button" data-dot="1" aria-label="Go to screen 1"></button>
+          <button class="auth-dot" type="button" data-dot="2" aria-label="Go to screen 2"></button>
+          <button class="auth-dot" type="button" data-dot="3" aria-label="Go to screen 3"></button>
+        </nav>
+
+        <!-- LOGIN -->
+        <section class="auth-screen" data-view="login" aria-hidden="true">
+          <div class="auth-form-wrap">
+            <h1>Welcome back</h1>
+            <p>Login to continue to AddCo</p>
+            <form id="loginForm" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="loginEmail">Email</label>
+                <input class="form-input" type="email" id="loginEmail" placeholder="you@example.com"
+                  autocomplete="email">
+                <span class="form-error" id="loginEmailError"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loginPassword">Password</label>
+                <input class="form-input" type="password" id="loginPassword" placeholder="••••••••"
+                  autocomplete="current-password">
+                <span class="form-error" id="loginPasswordError"></span>
+              </div>
+              <a href="#" class="auth-link" id="forgotPasswordLink">Forgot password?</a>
+              <button class="btn-primary auth-submit" type="submit">Login</button>
+            </form>
+            <p class="auth-switch">Don't have an account? <a href="#" data-view-target="signup">Sign up</a></p>
+          </div>
+        </section>
+
+        <!-- SIGN UP -->
+        <section class="auth-screen" data-view="signup" aria-hidden="true">
+          <div class="auth-form-wrap">
+            <h1>Create your account</h1>
+            <p>Start tracking your money with AddCo</p>
+            <form id="signupForm" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="signupName">Full name</label>
+                <input class="form-input" type="text" id="signupName" placeholder="Your name" autocomplete="name">
+                <span class="form-error" id="signupNameError"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="signupEmail">Email</label>
+                <input class="form-input" type="email" id="signupEmail" placeholder="you@example.com"
+                  autocomplete="email">
+                <span class="form-error" id="signupEmailError"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="signupPassword">Password</label>
+                <input class="form-input" type="password" id="signupPassword" placeholder="At least 6 characters"
+                  autocomplete="new-password">
+                <span class="form-error" id="signupPasswordError"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="signupConfirm">Confirm password</label>
+                <input class="form-input" type="password" id="signupConfirm" placeholder="Re-enter password"
+                  autocomplete="new-password">
+                <span class="form-error" id="signupConfirmError"></span>
+              </div>
+              <button class="btn-primary auth-submit" type="submit">Sign up</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="#" data-view-target="login">Login</a></p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
 
   <!-- ============ LOADING SCREEN ============ -->
   <div id="loadingScreen" class="loading-screen">
@@ -49,7 +275,7 @@
           <i class="fa-regular fa-bell"></i>
         </button>
         <button class="user-chip" id="userChipBtn" aria-label="Account">
-          <span class="user-avatar-sm">RA</span>
+          <span class="user-avatar-sm" id="userAvatarSm">RA</span>
         </button>
       </div>
     </div>
@@ -70,7 +296,7 @@
         <div class="nav-view nav-view--main" id="navViewMain">
           <ul class="nav-links">
             <li><a href="#" class="nav-link" data-page="dashboard"><i
-                  class="fa-solid fa-grid-2 nav-link-icon"></i><span>Dashboard</span></a></li>
+                  class="fa-brands fa-houzz nav-link-icon"></i><span>Dashboard</span></a></li>
             <li><a href="#" class="nav-link" data-page="addExpense"><i
                   class="fa-solid fa-circle-plus nav-link-icon"></i><span>Add Expense</span></a></li>
             <li><a href="#" class="nav-link" data-page="myPurchases"><i
@@ -88,12 +314,12 @@
           <div class="nav-divider"></div>
 
           <button class="profile-section" id="profileToggleBtn">
-            <span class="user-avatar-md">RA</span>
+            <span class="user-avatar-md" id="userAvatarMd">RA</span>
             <span class="profile-info">
               <span class="profile-name" id="profileNameLabel">Riya Agarwal</span>
               <span class="profile-email" id="profileEmailLabel">riya.agarwal@email.com</span>
             </span>
-            <span class="premium-badge"><i class="fa-solid fa-crown"></i> Premium</span>
+            <span class="premium-badge"><i class="fa-solid fa-crown"></i> Basic Acc</span>
             <i class="fa-solid fa-chevron-right profile-arrow"></i>
           </button>
 
@@ -109,10 +335,10 @@
           </button>
 
           <div class="profile-summary">
-            <span class="user-avatar-lg">RA</span>
-            <span class="profile-name-lg">Riya Agarwal</span>
-            <span class="profile-email">riya.agarwal@email.com</span>
-            <span class="premium-badge"><i class="fa-solid fa-crown"></i> Premium</span>
+            <span class="user-avatar-lg" id="userAvatarLg">RA</span>
+            <span class="profile-name-lg" id="profileNameLg">Riya Agarwal</span>
+            <span class="profile-email" id="profileEmailLg">riya.agarwal@email.com</span>
+            <span class="premium-badge"><i class="fa-solid fa-crown"></i> Basic Acc</span>
           </div>
 
           <ul class="nav-links">
@@ -252,6 +478,8 @@
               class="optional-tag">(optional)</span></label>
           <textarea id="descriptionInput" class="form-input" rows="3"
             placeholder="What was this expense for?"></textarea>
+
+          <span class="form-error" id="descriptionError"></span>
         </div>
 
         <button type="submit" class="btn-primary btn-add-expense" id="addExpenseButton">
@@ -638,6 +866,7 @@
     <span class="toast-message" id="toastMessage"></span>
   </div>
 
+  <script src="auth.js"></script>
   <script src="noting.js"></script>
 </body>
 

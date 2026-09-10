@@ -620,10 +620,31 @@ function showProfileMainView() {
   document.getElementById("navViewProfile").hidden = true;
 }
 
+function getInitials(name) {
+  const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "AC";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 function updateProfileDisplay() {
   const settings = getSettings();
+  const initials = getInitials(settings.name);
+
   document.getElementById("profileNameLabel").textContent = settings.name;
   document.getElementById("profileEmailLabel").textContent = settings.email;
+
+  const nameLg = document.getElementById("profileNameLg");
+  const emailLg = document.getElementById("profileEmailLg");
+  if (nameLg) nameLg.textContent = settings.name;
+  if (emailLg) emailLg.textContent = settings.email;
+
+  const avatarSm = document.getElementById("userAvatarSm");
+  const avatarMd = document.getElementById("userAvatarMd");
+  const avatarLg = document.getElementById("userAvatarLg");
+  if (avatarSm) avatarSm.textContent = initials;
+  if (avatarMd) avatarMd.textContent = initials;
+  if (avatarLg) avatarLg.textContent = initials;
 }
 
 /* ==========================================================================
@@ -808,6 +829,8 @@ function validateExpenseFields(fields) {
   if (!fields.date) errors.date = "Date is required";
   if (!fields.paymentMethod)
     errors.paymentMethod = "Payment method is required";
+  if (fields.description.length > 70)
+    errors.description = "Description must be 10 characters or less";
 
   return errors;
 }
@@ -852,12 +875,14 @@ function handleAddExpenseSubmit(event) {
       category: "categoryError",
       date: "dateError",
       paymentMethod: "paymentMethodError",
+      description: "descriptionError", // 👈 add
     },
     {
       amount: "amountInput",
       category: "categorySelect",
       date: "dateInput",
       paymentMethod: "paymentMethodSelect",
+      description: "descriptionInput", // 👈 add
     },
   );
   if (Object.keys(errors).length) return;
@@ -962,12 +987,14 @@ function handleEditExpenseSubmit(event) {
       category: "editCategoryError",
       date: "editDateError",
       paymentMethod: "editPaymentMethodError",
+      description: "editDescriptionError", // 👈 add this
     },
     {
       amount: "editAmountInput",
       category: "editCategorySelect",
       date: "editDateInput",
       paymentMethod: "editPaymentMethodSelect",
+      description: "editDescriptionInput", // 👈 add this
     },
   );
   if (Object.keys(errors).length) return;
@@ -1500,6 +1527,7 @@ function handleClearData() {
 
 function handleLogout() {
   if (!window.confirm("Are you sure you want to logout?")) return;
+  if (window.AddCoAuth) window.AddCoAuth.logout();
   showToast("Logging out…");
   setTimeout(() => window.location.reload(), 700);
 }
@@ -1553,7 +1581,7 @@ function attachEventListeners() {
         showPage("settings");
       } else if (panel === "help") {
         closeMenu();
-        showToast("For help, contact support@addco.app");
+        showToast("For help, contact support@addCo.com");
       } else if (panel === "about") {
         closeMenu();
         showToast("AddCo v1.0 — your personal expense tracker");
