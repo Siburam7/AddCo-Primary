@@ -1,0 +1,64 @@
+/* ==========================================================================
+   AddCo — settings.css
+   ========================================================================== */
+
+.settings-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.settings-row:last-child { border-bottom: none; padding-bottom: 0; }
+.settings-row:first-child { padding-top: 0; }
+
+.settings-row-text { display: flex; flex-direction: column; gap: 2px; }
+.settings-row-title { font-size: 14px; font-weight: 600; }
+.settings-row-desc { font-size: 12.5px; color: var(--color-text-muted); }
+
+.settings-select { width: auto; min-width: 140px; }
+
+.btn-settings-logout { width: 100%; margin-top: 4px; }
+
+/* ---------- Toggle switch ---------- */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--color-primary); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+@media (max-width: 560px) {
+  .settings-form-row { grid-template-columns: 1fr; }
+}
