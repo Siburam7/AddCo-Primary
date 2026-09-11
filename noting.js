@@ -533,10 +533,13 @@ function showPage(pageId) {
     .forEach((page) => page.classList.remove("is-active"));
   const target = document.getElementById("page-" + pageId);
   if (target) {
+    void target.offsetWidth; // force reflow so the entrance animation restarts
     target.classList.add("is-active");
   } else {
     pageId = "dashboard";
-    document.getElementById("page-dashboard").classList.add("is-active");
+    const fallback = document.getElementById("page-dashboard");
+    void fallback.offsetWidth;
+    fallback.classList.add("is-active");
   }
 
   setActivePage(pageId);
@@ -962,8 +965,19 @@ function openEditExpenseModal(id) {
   document.getElementById("editModal").hidden = false;
 }
 
+/* ---------- shared modal close animation ---------- */
+function closeModalAnimated(id) {
+  const modal = document.getElementById(id);
+  if (!modal || modal.hidden) return;
+  modal.classList.add("is-closing");
+  setTimeout(() => {
+    modal.hidden = true;
+    modal.classList.remove("is-closing");
+  }, 160);
+}
+
 function closeEditExpenseModal() {
-  document.getElementById("editModal").hidden = true;
+  closeModalAnimated("editModal");
   pendingEditExpenseId = null;
 }
 
@@ -1016,7 +1030,7 @@ function openDeleteExpenseModal(id) {
 }
 
 function closeDeleteExpenseModal() {
-  document.getElementById("deleteModal").hidden = true;
+  closeModalAnimated("deleteModal");
   pendingDeleteExpenseId = null;
 }
 
@@ -1316,7 +1330,7 @@ function openCategoryModal(categoryId) {
 }
 
 function closeCategoryModal() {
-  document.getElementById("categoryModal").hidden = true;
+  closeModalAnimated("categoryModal");
   pendingEditCategoryId = null;
 }
 
@@ -1425,7 +1439,7 @@ function openCategoryDeleteModal(id) {
 }
 
 function closeCategoryDeleteModal() {
-  document.getElementById("categoryDeleteModal").hidden = true;
+  closeModalAnimated("categoryDeleteModal");
   pendingDeleteCategoryId = null;
 }
 
