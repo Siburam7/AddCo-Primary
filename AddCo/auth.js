@@ -131,6 +131,7 @@
     settings.email = email;
     saveSettings(settings);
     if (typeof updateProfileDisplay === "function") updateProfileDisplay();
+    if (typeof renderDashboard === "function") renderDashboard();
   }
 
   function prefillProfileForm() {
@@ -217,18 +218,36 @@
 
       var fullName = (firstName + " " + lastName).trim();
       saveProfile({ firstName: firstName, lastName: lastName, username: username, email: email });
-
       leaveOnboarding();
       setSession(true);
       syncProfileToApp(fullName, email);
-      unlockApp();
-      if (typeof showToast === "function") showToast("Welcome to AddCo, " + firstName + "!");
+
+      var submitBtn = profileForm.querySelector(".auth-submit");
+      var originalLabel = submitBtn ? submitBtn.innerHTML : "";
+      if (submitBtn) {
+        submitBtn.classList.add("is-success");
+        submitBtn.innerHTML = '<span class="auth-submit__check">✓ Welcome, ' + escapeForHtml(firstName) + '!</span>';
+      }
+
+      setTimeout(function () {
+        unlockApp();
+        if (typeof showToast === "function") showToast("Welcome to AddCo, " + firstName + "!");
+        if (submitBtn) {
+          submitBtn.classList.remove("is-success");
+          submitBtn.innerHTML = originalLabel;
+        }
+      }, 550);
     });
   }
 
   /* ---------------- validators ---------------- */
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  function escapeForHtml(str) {
+    var div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
   }
 
   /* ---------------- boot ---------------- */

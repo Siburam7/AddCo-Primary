@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="animations.css">
   <link rel="stylesheet" href="addExpense.css">
+  <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="myPurchases.css">
   <link rel="stylesheet" href="budget.css">
   <link rel="stylesheet" href="reports.css">
@@ -342,6 +343,7 @@
     <!-- ---------- DASHBOARD ---------- -->
     <section class="page" id="page-dashboard">
       <div class="page-header">
+        <span class="dashboard-greeting" id="dashboardGreeting"></span>
         <h1 class="page-title">Dashboard</h1>
         <p class="page-subtitle" id="dashboardDateLabel">Overview for this month</p>
       </div>
@@ -461,13 +463,18 @@
           <span class="form-error" id="descriptionError"></span>
         </div>
 
-        <button type="submit" class="btn-primary btn-add-expense" id="addExpenseButton">
-          <span class="btn-content">
-            <i class="fa-solid fa-plus"></i>
-            <span class="btn-text">Add Expense</span>
-          </span>
-          <span class="btn-spinner" hidden></span>
-        </button>
+        <div class="expense-form-actions">
+          <button type="button" class="btn-secondary btn-cancel-expense" id="cancelExpenseBtn">
+            Cancel
+          </button>
+          <button type="submit" class="btn-primary btn-add-expense" id="addExpenseButton">
+            <span class="btn-content">
+              <i class="fa-solid fa-plus"></i>
+              <span class="btn-text">Add Expense</span>
+            </span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+        </div>
       </form>
     </section>
 

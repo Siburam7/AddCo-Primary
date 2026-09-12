@@ -742,6 +742,13 @@ function renderDashboard() {
   const totalIncome = budget.monthlyBudget || 0;
   const remaining = totalIncome - totalSpent;
 
+  const settings = getSettings();
+  const firstName = String(settings.name || "").trim().split(/\s+/)[0];
+  const greetingEl = document.getElementById("dashboardGreeting");
+  if (greetingEl) {
+    greetingEl.textContent = firstName ? `Welcome back, ${firstName}` : "Welcome back";
+  }
+
   document.getElementById("statTotalSpent").textContent =
     formatCurrency(totalSpent);
   document.getElementById("statTotalIncome").textContent =
@@ -833,7 +840,7 @@ function validateExpenseFields(fields) {
   if (!fields.paymentMethod)
     errors.paymentMethod = "Payment method is required";
   if (fields.description.length > 70)
-    errors.description = "Description must be 10 characters or less";
+    errors.description = "Description must be 70 characters or less";
 
   return errors;
 }
@@ -892,11 +899,13 @@ function handleAddExpenseSubmit(event) {
 
   isSubmittingExpense = true;
   const button = document.getElementById("addExpenseButton");
+  const cancelBtn = document.getElementById("cancelExpenseBtn");
   const textEl = button.querySelector(".btn-text");
   const iconEl = button.querySelector(".btn-content i");
   const originalText = textEl.textContent;
 
   button.disabled = true;
+  if (cancelBtn) cancelBtn.disabled = true;
   button.classList.add("is-loading");
 
   setTimeout(() => {
@@ -912,6 +921,7 @@ function handleAddExpenseSubmit(event) {
       textEl.textContent = originalText;
       iconEl.className = "fa-solid fa-plus";
       button.disabled = false;
+      if (cancelBtn) cancelBtn.disabled = false;
       isSubmittingExpense = false;
 
       resetExpenseForm();
@@ -926,6 +936,12 @@ function handleAddExpenseSubmit(event) {
   }, 700);
 }
 
+function handleCancelExpense() {
+  if (isSubmittingExpense) return;
+  resetExpenseForm();
+  showPage("dashboard");
+}
+
 function resetExpenseForm() {
   document.getElementById("expenseForm").reset();
   document.getElementById("dateInput").value = todayISO();
@@ -934,8 +950,9 @@ function resetExpenseForm() {
     "categoryError",
     "dateError",
     "paymentMethodError",
+    "descriptionError",
   ]);
-  ["amountInput", "categorySelect", "dateInput", "paymentMethodSelect"].forEach(
+  ["amountInput", "categorySelect", "dateInput", "paymentMethodSelect", "descriptionInput"].forEach(
     (id) => document.getElementById(id).classList.remove("has-error"),
   );
 }
@@ -1615,6 +1632,9 @@ function attachEventListeners() {
   document
     .getElementById("expenseForm")
     .addEventListener("submit", handleAddExpenseSubmit);
+  document
+    .getElementById("cancelExpenseBtn")
+    .addEventListener("click", handleCancelExpense);
 
   /* ---- My purchases ---- */
   document

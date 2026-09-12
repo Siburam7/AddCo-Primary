@@ -10,11 +10,70 @@
   max-width: 520px;
 }
 
+/* ---------- Everything below is scoped to #page-addExpense only, so the
+   Edit Expense modal (which reuses .expense-form/.form-group) and other
+   pages keep their current look untouched. ---------- */
+
+#page-addExpense .page-header {
+  margin-bottom: 16px;
+}
+#page-addExpense {
+  padding-bottom: 28px;
+}
+
+/* Amount is the primary field: bigger, bolder, first thing the eye lands on */
+#page-addExpense .form-group:first-child {
+  margin-bottom: 18px;
+}
+#page-addExpense .amount-input {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  padding: 14px 14px 14px 34px;
+}
+#page-addExpense .currency-symbol {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+#page-addExpense .amount-input:focus {
+  box-shadow: 0 0 0 4px var(--color-primary-light);
+}
+
+#page-addExpense .form-label {
+  font-size: 13px;
+}
+
+/* Clearer, slightly bolder validation messages */
+#page-addExpense .form-error:not(:empty) {
+  font-weight: 500;
+}
+
+/* ---------- Primary/secondary button row ---------- */
+.expense-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+.btn-cancel-expense {
+  flex: 1;
+}
 .btn-add-expense {
-  width: 100%;
+  flex: 2;
   position: relative;
   height: 46px;
-  margin-top: 4px;
+  margin-top: 0;
+}
+
+@media (max-width: 480px) {
+  .expense-form-actions {
+    flex-direction: column-reverse;
+  }
+  .btn-cancel-expense,
+  .btn-add-expense {
+    flex: 1;
+    width: 100%;
+  }
 }
 
 .btn-add-expense .btn-content {
@@ -41,13 +100,20 @@
 .btn-add-expense.is-loading .btn-content { opacity: 0; }
 .btn-add-expense.is-loading .btn-spinner { display: block !important; }
 
-/* Success state: green flash with check icon */
+/* Success state: green flash with check icon + a subtle confirming pulse */
 .btn-add-expense.is-success {
   background: var(--color-success);
+  animation: expenseSuccessPulse 420ms ease;
 }
 .btn-add-expense.is-success .btn-content { opacity: 1; }
 .btn-add-expense.is-success .btn-spinner { display: none !important; }
+@keyframes expenseSuccessPulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
 
 @media (max-width: 720px) {
   .expense-form { max-width: 100%; padding: 16px; }
 }
+

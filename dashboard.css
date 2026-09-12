@@ -1,0 +1,128 @@
+/* ==========================================================================
+   AddCo — dashboard.css
+   Visual polish for the Dashboard ONLY. Every rule here is scoped under
+   #page-dashboard so shared classes (.panel, .dash-row, .progress-track,
+   .category-bar-row, .empty-hint, etc.) keep rendering exactly as before
+   on Budget, Reports and My Purchases, which reuse the same base classes.
+   No HTML structure, IDs, or JS logic changed — CSS only.
+   ========================================================================== */
+
+/* ---------- Header + greeting ---------- */
+#page-dashboard .page-header {
+  margin-bottom: 22px;
+}
+#page-dashboard .dashboard-greeting {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-bottom: 2px;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Stat grid: Total Spending as the hero figure ---------- */
+#page-dashboard .stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+#page-dashboard .stat-card {
+  padding: 16px 18px;
+}
+#page-dashboard .stat-card:first-child {
+  grid-column: 1 / -1;
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+  padding: 20px 22px;
+}
+#page-dashboard .stat-card:first-child .stat-label {
+  color: var(--color-primary-dark);
+  font-size: 13px;
+}
+#page-dashboard .stat-card:first-child .stat-value {
+  font-size: 32px;
+  color: var(--color-primary-dark);
+  margin: 2px 0;
+}
+#page-dashboard .stat-card:first-child .stat-sub {
+  color: var(--color-primary-dark);
+  opacity: 0.72;
+}
+#page-dashboard .stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 11px;
+}
+#page-dashboard .stat-value {
+  margin: 1px 0;
+}
+
+@media (min-width: 640px) {
+  #page-dashboard .stat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Panels: tighter, calmer spacing ---------- */
+#page-dashboard .panel {
+  padding: 18px;
+}
+#page-dashboard .panel-title {
+  font-size: 15px;
+}
+
+/* ---------- Category breakdown ---------- */
+#page-dashboard .category-bar-row {
+  margin-bottom: 14px;
+}
+#page-dashboard .category-bar-top {
+  font-size: 13.5px;
+  margin-bottom: 7px;
+}
+#page-dashboard .progress-track {
+  height: 7px;
+}
+
+/* ---------- Budget status ---------- */
+#page-dashboard .budget-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+#page-dashboard .progress-fill.is-warning {
+  background: var(--color-warning);
+}
+#page-dashboard .progress-fill.is-danger {
+  background: var(--color-danger);
+}
+
+/* ---------- Recent transactions ---------- */
+#page-dashboard .recent-item {
+  padding: 11px 6px;
+  margin: 0 -6px;
+  border-radius: var(--radius-sm);
+  border-bottom-color: var(--color-border);
+  transition: background-color 0.15s ease;
+}
+#page-dashboard .recent-item:hover {
+  background-color: var(--color-surface);
+}
+#page-dashboard .recent-item-desc {
+  font-size: 14px;
+}
+
+/* ---------- Friendlier empty states (Dashboard only) ---------- */
+#page-dashboard .empty-hint {
+  text-align: center;
+  padding: 26px 12px;
+  font-size: 13.5px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  #page-dashboard .stat-card:first-child .stat-value {
+    font-size: 28px;
+  }
+}

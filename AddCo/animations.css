@@ -1,0 +1,201 @@
+/* ==========================================================================
+   AddCo — animations.css
+   A focused pass of professional motion for the main app: page transitions,
+   modal open/close, card entrances + hover feedback, list stagger-ins, and
+   toast polish. Kept in its own file so it's easy to review or dial back.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Page tab transitions (Dashboard / Add / Purchases / ...) ---------- */
+.page.is-active {
+  animation: pageEnter 320ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Stat cards: entrance stagger + hover lift ---------- */
+.stat-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  animation: cardPopIn 360ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md, 0 10px 24px -12px rgba(30, 27, 46, 0.18));
+  border-color: var(--color-primary-light);
+}
+@keyframes cardPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.page-content .stat-card:nth-of-type(1) { animation-delay: 0ms; }
+.page-content .stat-card:nth-of-type(2) { animation-delay: 40ms; }
+.page-content .stat-card:nth-of-type(3) { animation-delay: 80ms; }
+.page-content .stat-card:nth-of-type(4) { animation-delay: 120ms; }
+.page-content .stat-card:nth-of-type(5) { animation-delay: 160ms; }
+
+/* ---------- Generic content cards (dashboard sections, settings groups) ---------- */
+.card,
+.dashboard-card,
+.settings-group {
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+/* ---------- Buttons: consistent lift + press feedback everywhere ---------- */
+.btn-primary,
+.btn-secondary {
+  transition:
+    background 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px -8px rgba(91, 79, 233, 0.45);
+}
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+.icon-btn {
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* ---------- Recent transactions / purchase rows: stagger-in ---------- */
+.recent-item,
+.purchase-row:not(.purchase-row-header) {
+  animation: rowSlideIn 320ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.recent-item:nth-of-type(1), .purchase-row:not(.purchase-row-header):nth-of-type(1) { animation-delay: 0ms; }
+.recent-item:nth-of-type(2), .purchase-row:not(.purchase-row-header):nth-of-type(2) { animation-delay: 40ms; }
+.recent-item:nth-of-type(3), .purchase-row:not(.purchase-row-header):nth-of-type(3) { animation-delay: 80ms; }
+.recent-item:nth-of-type(4), .purchase-row:not(.purchase-row-header):nth-of-type(4) { animation-delay: 120ms; }
+.recent-item:nth-of-type(5), .purchase-row:not(.purchase-row-header):nth-of-type(5) { animation-delay: 160ms; }
+.recent-item:nth-of-type(n+6), .purchase-row:not(.purchase-row-header):nth-of-type(n+6) { animation-delay: 200ms; }
+@keyframes rowSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.recent-item,
+.purchase-row {
+  transition: background-color 0.15s ease;
+}
+.recent-item:hover {
+  background-color: var(--color-surface);
+}
+
+/* ---------- Modals: fade backdrop + pop-in box, animated close ---------- */
+.modal-overlay:not([hidden]) {
+  animation: modalBackdropIn 200ms ease forwards;
+}
+.modal-overlay.is-closing {
+  animation: modalBackdropOut 160ms ease forwards;
+}
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modalBackdropOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.modal-overlay:not([hidden]) .modal-box {
+  animation: modalBoxIn 240ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.modal-overlay.is-closing .modal-box {
+  animation: modalBoxOut 160ms ease forwards;
+}
+@keyframes modalBoxIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes modalBoxOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+
+/* ---------- Toast: smoother, slightly bouncy entrance ---------- */
+.toast.is-visible {
+  animation: toastPop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes toastPop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* ---------- Nav / footer nav link feedback ---------- */
+.footer-nav-item,
+.nav-link {
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.12s ease;
+}
+.footer-nav-item:active {
+  transform: scale(0.94);
+}
+
+/* ---------- Toggle switches / dropdowns already animated by browser;
+   just make sure our custom ones ease nicely ---------- */
+.toggle-switch,
+.toggle-switch * {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* ---------- Category / icon picker options ---------- */
+.icon-picker-option,
+.color-picker-option {
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+.icon-picker-option:hover,
+.color-picker-option:hover {
+  transform: translateY(-2px);
+}

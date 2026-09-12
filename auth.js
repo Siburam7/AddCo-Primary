@@ -131,6 +131,7 @@
     settings.email = email;
     saveSettings(settings);
     if (typeof updateProfileDisplay === "function") updateProfileDisplay();
+    if (typeof renderDashboard === "function") renderDashboard();
   }
 
   function prefillProfileForm() {
